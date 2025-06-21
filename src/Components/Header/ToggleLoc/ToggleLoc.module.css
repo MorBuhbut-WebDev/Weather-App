@@ -1,4 +1,5 @@
 .buttonsWrapper {
+  align-self: center;
   flex: 1 1 20%;
   display: flex;
 }
@@ -13,8 +14,8 @@
 }
 
 .activeBtn {
-  background-color: var(--text-primary);
-  color: var(--bg-card);
+  background-color: var(--border);
+  color: var(--text-primary);
 }
 
 .toggleBtn:first-child {

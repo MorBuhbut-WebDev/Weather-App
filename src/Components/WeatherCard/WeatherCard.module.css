@@ -1,0 +1,63 @@
+.weatherCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.today {
+  color: var(--text-primary);
+  font-size: var(--text-medium);
+  font-weight: 200;
+  margin-bottom: clamp(0.25rem, 0.5vw, 0.5rem);
+}
+
+.cityName {
+  color: var(--text-primary);
+  font-size: var(--text-medium);
+}
+
+.weatherEmoji {
+  font-size: clamp(7.8125rem, 8vw, 8.5rem);
+}
+
+.weatherDescription {
+  color: var(--text-primary);
+  font-size: var(--text-medium);
+  font-weight: 200;
+}
+
+.cityTemp {
+  color: var(--text-primary);
+  font-size: calc(var(--text-large) + 1.75rem);
+  font-weight: 300;
+  margin-bottom: clamp(1rem, 1.25vw, 1.25rem);
+}
+
+.metrics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-large);
+}
+
+.humidity,
+.windSpeed {
+  color: var(--text-primary);
+  font-weight: 250;
+}
+
+.humidity span,
+.windSpeed span {
+  font-weight: 400;
+}
+
+@media (min-width: 640px) {
+  .today,
+  .cityName,
+  .weatherDescription,
+  .humidity,
+  .windSpeed {
+    font-size: calc(var(--text-large) - 0.3rem);
+  }
+}
