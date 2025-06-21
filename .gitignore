@@ -1,0 +1,19 @@
+# Node modules (never commit this)
+node_modules/
+
+# Local env variables (keep secrets out of GitHub)
+.env
+.env.*    # handles .env.production, .env.development, etc.
+
+# Vite cache directory
+.vite/
+
+# System / IDE files
+.DS_Store         # macOS file
+Thumbs.db         # Windows file
+*.log             # Log files (npm-debug.log, etc.)
+*.sublime-project # Editor-specific files (optional)
+.vscode/          # Optional: VSCode workspace settings
+
+# Build output (if you run `vite build`)
+dist/
