@@ -1,0 +1,24 @@
+.form {
+  flex: 1 1 80%;
+}
+
+.searchBar {
+  width: 100%;
+  max-width: 750px;
+  padding: var(--padding-small) var(--padding-medium);
+  background-color: var(--bg-card);
+  border: none;
+  outline: none;
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  font-size: var(--text-medium);
+}
+
+.searchBar:focus {
+  border: 2px solid var(--accent);
+}
+
+.searchBar::placeholder {
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}

@@ -1,5 +1,40 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
+:root {
+  /* Colors */
+  --bg-main: #121212;
+  --bg-card: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent: #4fc3f7;
+  --border: #2a2a2a;
+  --error: #ef5350;
+  --success: #66bb6a;
+
+  /* Text sizes */
+  --text-small: clamp(0.8rem, 1vw + 0.5rem, 1rem);
+  --text-medium: clamp(1rem, 1.5vw + 0.75rem, 1.25rem);
+  --text-large: clamp(1.5rem, 2vw + 1rem, 2rem);
+
+  /* Margins */
+  --margin-small: clamp(0.5rem, 0.5vw + 0.25rem, 1rem);
+  --margin-medium: clamp(1rem, 1vw + 0.5rem, 1.5rem);
+  --margin-large: clamp(1.5rem, 1.5vw + 0.75rem, 2rem);
+
+  /* Paddings */
+  --padding-small: clamp(0.4rem, 0.5vw + 0.2rem, 0.8rem);
+  --padding-medium: clamp(0.8rem, 1vw + 0.4rem, 1.2rem);
+  --padding-large: clamp(1.2rem, 1.5vw + 0.6rem, 1.8rem);
+
+  /* Gaps */
+  --gap-small: clamp(0.5rem, 0.5vw + 0.25rem, 1rem);
+  --gap-medium: clamp(1rem, 1vw + 0.5rem, 1.5rem);
+  --gap-large: clamp(1.5rem, 1.5vw + 0.75rem, 2rem);
+
+  /* Border Radius */
+  --border-radius: clamp(0.5rem, 0.75vw, 0.75rem);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,4 +50,5 @@ body {
 #root {
   width: 100%;
   height: 100%;
+  background-color: var(--bg-main);
 }
