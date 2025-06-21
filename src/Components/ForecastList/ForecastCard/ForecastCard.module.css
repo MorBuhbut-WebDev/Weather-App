@@ -1,0 +1,28 @@
+.forecastCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-small);
+  background-color: var(--bg-card);
+  padding: var(--padding-medium);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.day {
+  color: var(--text-primary);
+}
+
+.temp {
+  color: var(--text-secondary);
+  font-weight: 200;
+}
+
+.icon {
+  font-size: var(--text-large);
+}
+
+.selectedDay {
+  background-color: var(--border);
+}
