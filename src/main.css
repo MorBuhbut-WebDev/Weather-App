@@ -2,14 +2,14 @@
 
 :root {
   /* Colors */
-  --bg-main: #121212;
-  --bg-card: #1e1e1e;
-  --text-primary: #e0e0e0;
-  --text-secondary: #a0a0a0;
-  --accent: #4fc3f7;
-  --border: #2a2a2a;
-  --error: #ef5350;
-  --success: #66bb6a;
+  --bg-main: #0d1117; /* Very dark blue-gray background */
+  --bg-card: #161b22; /* Slightly lighter card background */
+  --text-primary: #f0f6fc; /* Soft white with slight blue tint */
+  --text-secondary: #8b949e; /* Muted gray-blue for secondary text */
+  --accent: #58a6ff; /* Vibrant blue accent */
+  --border: #30363d; /* Subtle border tone */
+  --error: #f85149; /* Bright red error */
+  --success: #3fb950; /* Fresh green success */
 
   /* Text sizes */
   --text-small: clamp(0.8rem, 1vw + 0.5rem, 1rem);
@@ -45,6 +45,7 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: Roboto, sans-serif;
+  overflow: hidden;
 }
 
 #root {
