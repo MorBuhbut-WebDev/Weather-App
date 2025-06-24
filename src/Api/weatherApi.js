@@ -1,3 +1,5 @@
+import { refactorLocations } from "./weatherApi.utils.js";
+
 const apiKey = import.meta.env.VITE_API_KEY;
 
 async function fetchData(url) {
@@ -16,15 +18,7 @@ export async function fetchGeoLocation(city) {
   const baseGeoUrl = import.meta.env.VITE_BASE_GEO_URL;
   const url = `${baseGeoUrl}?q=${city}&limit=5&appid=${apiKey}`;
   const locations = await fetchData(url);
-  let id = 0;
-  return locations.map((location) => {
-    return {
-      id: id++,
-      label: `${location.name}, ${location.state}, ${location.country}`,
-      lat: location.lat,
-      lon: location.lon,
-    };
-  });
+  return refactorLocations(locations);
 }
 
 export async function fetchWeeklyForecast(lat, lon) {

@@ -1,0 +1,10 @@
+.option {
+  cursor: pointer;
+  padding: var(--padding-small) var(--padding-medium);
+  font-size: calc(var(--text-small) + 0.1rem);
+}
+
+.option:hover,
+.option:active {
+  background-color: var(--border);
+}

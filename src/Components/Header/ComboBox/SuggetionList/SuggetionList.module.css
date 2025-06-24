@@ -1,0 +1,40 @@
+.suggestionsList {
+  width: 100%;
+  max-width: 750px;
+  max-height: 110px;
+  background-color: var(--bg-card);
+  border: none;
+  outline: none;
+  border-radius: 0;
+  color: var(--text-primary);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  overflow-y: auto;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.suggestionsList::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.suggestionsList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.suggestionsList::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background: var(--accent);
+  border-radius: 10px;
+}
+
+@media (min-width: 640px) {
+  .suggestionsList {
+    max-height: 125px;
+  }
+}
