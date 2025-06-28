@@ -18,7 +18,9 @@
 }
 
 .weatherEmoji {
-  font-size: clamp(7.8125rem, 8vw, 8.5rem);
+  width: max(5%, 5rem);
+  height: auto;
+  object-fit: cover;
 }
 
 .weatherDescription {
@@ -50,6 +52,41 @@
 .humidity span,
 .windSpeed span {
   font-weight: 400;
+}
+
+.errorMsg {
+  color: var(--error);
+  font-size: var(--text-large);
+  text-align: center;
+  padding: var(--padding-small);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingIndicatorWrapper {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingIndicator {
+  width: clamp(5rem, 7vw, 8rem);
+  height: clamp(5rem, 7vw, 8rem);
+  border-radius: 50%;
+  border: clamp(3px, 1vw, 5px) solid transparent;
+  border-top: clamp(3px, 1vw, 5px) solid var(--accent);
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (min-width: 640px) {

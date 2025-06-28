@@ -1,39 +1,33 @@
 import styles from "./ToggleLoc.module.css";
 import { useState } from "react";
 import { handleToggleLocation } from "./ToggleLoc.utils";
-import { useLocationContext } from "../../../Context/LocationProvider/LocationProvider.jsx";
+import { useWeather } from "../../../Context/WeatherProvider/WeatherProvider.jsx";
 
 export default function ToggleLoc() {
   const [selectedOption, setSelectedOption] = useState("No");
-  const { setCurrentLocation } = useLocationContext();
+  const { dispatch } = useWeather();
+  const activeToggle = `${styles.toggleBtn} ${styles.activeBtn}`;
+  const disabledToggle = styles.toggleBtn;
 
   return (
     <div className={styles.locationWrapper}>
       <p className={styles.labelMessage}>📍 Use My Location?</p>
       <div className={styles.buttonsWrapper}>
         <button
-          className={
-            selectedOption === "Yes"
-              ? `${styles.toggleBtn} ${styles.activeBtn}`
-              : styles.toggleBtn
-          }
+          className={selectedOption === "Yes" ? activeToggle : disabledToggle}
           aria-label="Approve Location Access"
           onClick={() =>
-            handleToggleLocation(setSelectedOption, setCurrentLocation)
+            handleToggleLocation(setSelectedOption, dispatch, true)
           }
           disabled={selectedOption === "Yes"}
         >
           Yes
         </button>
         <button
-          className={
-            selectedOption === "No"
-              ? `${styles.toggleBtn} ${styles.activeBtn}`
-              : styles.toggleBtn
-          }
+          className={selectedOption === "No" ? activeToggle : disabledToggle}
           aria-label="Decline Location Access"
           onClick={() =>
-            handleToggleLocation(setSelectedOption, setCurrentLocation, false)
+            handleToggleLocation(setSelectedOption, dispatch, false)
           }
           disabled={selectedOption === "No"}
         >

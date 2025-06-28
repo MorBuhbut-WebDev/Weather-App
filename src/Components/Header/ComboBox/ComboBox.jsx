@@ -1,28 +1,56 @@
-import { useState, useRef } from "react";
+import { useRef, useEffect } from "react";
 import styles from "./ComboBox.module.css";
-import {
-  useDebounce,
-  useSuggestions,
-  useCloseSuggestions,
-} from "./ComboBox.hooks.js";
+import { fetchGeoLocation } from "../../../Api/weatherApi.js";
+import { useDebounce } from "./ComboBox.hooks.js";
 import SuggetionList from "./SuggetionList/SuggetionList.jsx";
+import { useComboBoxContext } from "../../../Context/ComboBoxProvider/ComboBoxProvider.jsx";
+import { useWeather } from "../../../Context/WeatherProvider/WeatherProvider.jsx";
 
 export default function ComboBox() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [citiesSuggestions, setCitiesSuggestions] = useState([]);
+  const {
+    comboBoxState: { searchTerm, citiesSuggestions },
+    dispatch: dispatchComboBox,
+  } = useComboBoxContext();
+
+  const {
+    dispatch: dispatchWeather,
+    weatherState: { selectedLocation },
+  } = useWeather();
+
   const searchBarRef = useRef(null);
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const emptySearchBar = !debouncedSearchTerm.trim();
 
-  useSuggestions(debouncedSearchTerm, emptySearchBar, setCitiesSuggestions);
-  useCloseSuggestions(searchBarRef, setCitiesSuggestions);
+  // Use Effect that fetches the list of suggestions for the searched city
+  useEffect(() => {
+    const getSuggestions = async () => {
+      const suggestions = await fetchGeoLocation(debouncedSearchTerm);
+      dispatchComboBox({
+        type: "UPDATE_SUGGESTION_LIST",
+        payload: suggestions,
+      });
+    };
+
+    if (!selectedLocation) getSuggestions();
+  }, [debouncedSearchTerm]);
+
+  // Use Effect that makes the suggestion list close when the user clicks outside of the search bar
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (e.target === searchBarRef.current) return;
+      dispatchComboBox({ type: "UPDATE_SUGGESTION_LIST", payload: [] });
+    };
+
+    window.addEventListener("click", handleClick);
+
+    return () => window.removeEventListener("click", handleClick);
+  }, []);
 
   return (
     <div className={styles.combobox}>
       <input
         ref={searchBarRef}
         className={
-          emptySearchBar
+          !debouncedSearchTerm.trim()
             ? `${styles.searchBar} ${styles.empty}`
             : styles.searchBar
         }
@@ -30,13 +58,19 @@ export default function ComboBox() {
         value={searchTerm}
         placeholder="Search For Cities..."
         onChange={(e) => {
-          setSearchTerm(e.target.value);
-          if (!e.target.value.trim()) setCitiesSuggestions([]);
+          dispatchComboBox({
+            type: "UPDATE_SEARCH_TERM",
+            payload: e.target.value,
+          });
+          if (!e.target.value.trim()) {
+            dispatchWeather({
+              type: "UPDATE_SELECTED_LOCATION",
+              payload: null,
+            });
+          }
         }}
       />
-      {citiesSuggestions && (
-        <SuggetionList citiesSuggestions={citiesSuggestions} />
-      )}
+      {citiesSuggestions && <SuggetionList />}
     </div>
   );
 }
