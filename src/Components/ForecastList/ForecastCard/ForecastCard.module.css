@@ -3,11 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--gap-small);
   background-color: var(--bg-card);
-  padding: var(--padding-medium);
+  padding: var(--padding-medium) calc(var(--padding-large) + 1rem);
   border-radius: var(--border-radius);
   cursor: pointer;
+  flex: 1 1 auto;
 }
 
 .time {
@@ -27,5 +27,9 @@
   .time,
   .temp {
     font-size: var(--text-medium);
+  }
+
+  .forecastCard {
+    gap: var(--gap-small);
   }
 }

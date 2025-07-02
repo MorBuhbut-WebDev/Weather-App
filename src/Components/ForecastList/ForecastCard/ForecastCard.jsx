@@ -21,7 +21,9 @@ export default function ForecastCard({ time, iconUrl, temp }) {
       }
       onClick={() => dispatch({ type: "UPDATE_SELECTED_TIME", payload: time })}
     >
-      <p className={styles.time}>{time}</p>
+      <p className={styles.time}>
+        {time !== "Now" ? time.slice(0, time.length - 3) : time}
+      </p>
       <ForecastIcon iconUrl={iconUrl} />
       <p className={styles.temp}>{temp}</p>
     </li>
