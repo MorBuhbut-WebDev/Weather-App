@@ -13,9 +13,10 @@ export default function Option({ item: { label, lat, lon } }) {
       onClick={() => {
         comboBoxDispatch({ type: "UPDATE_SEARCH_TERM", payload: label });
         comboBoxDispatch({ type: "UPDATE_SUGGESTION_LIST", payload: [] });
+        weatherDispatch({ type: "UPDATE_ACTIVE_SOURCE", payload: "City" });
         weatherDispatch({
-          type: "UPDATE_SELECTED_LOCATION",
-          payload: { lat, lon },
+          type: "UPDATE_LOCATION",
+          payload: { location: { lat, lon }, activeSource: "City" },
         });
       }}
     >

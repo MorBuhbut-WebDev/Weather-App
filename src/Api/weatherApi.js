@@ -16,7 +16,6 @@ async function fetchData(url) {
 
 export async function fetchGeoLocation(city) {
   if (!city) return [];
-
   const baseGeoUrl = import.meta.env.VITE_BASE_GEO_URL;
   const url = `${baseGeoUrl}?q=${city}&limit=5&appid=${apiKey}`;
   const locations = await fetchData(url);

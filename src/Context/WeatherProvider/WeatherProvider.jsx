@@ -4,26 +4,49 @@ const WeatherContext = createContext();
 
 export const useWeather = () => useContext(WeatherContext);
 
+export const useActiveSource = () => {
+  const { weatherState } = useWeather();
+  const activeSource = weatherState.activeSource;
+  return activeSource ? weatherState[activeSource] : null;
+};
+
+export const useSelectedTime = () => {
+  const activeSource = useActiveSource();
+  const selectedTime = activeSource?.forecast?.selectedTime;
+  const forecastMap = activeSource?.forecast?.map;
+  return forecastMap ? forecastMap[selectedTime] : null;
+};
+
 export default function WeatherProvider({ children }) {
   const [weatherState, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case "UPDATE_USER_LOCATION":
+        case "UPDATE_ACTIVE_SOURCE":
           return {
             ...state,
-            userLocation: action.payload,
+            activeSource: action.payload,
           };
 
-        case "UPDATE_SELECTED_LOCATION":
+        case "UPDATE_LOCATION":
           return {
             ...state,
-            selectedLocation: action.payload,
+            [action.payload.activeSource]: {
+              ...state[action.payload.activeSource],
+              location: action.payload.location,
+            },
           };
 
         case "UPDATE_FORECAST":
           return {
             ...state,
-            forecast: { city: action.payload.city, obj: action.payload.obj },
+            [state.activeSource]: {
+              ...state[state.activeSource],
+              forecast: {
+                cityName: action.payload.cityName,
+                selectedTime: action.payload.selectedTime,
+                map: action.payload.map,
+              },
+            },
           };
 
         default:
@@ -31,13 +54,23 @@ export default function WeatherProvider({ children }) {
       }
     },
     {
-      userLocation: null,
-      selectedLocation: null,
-      forecast: {
-        city: null,
-        obj: {},
+      activeSource: null, // "User" | "City" | null
+      User: {
+        location: null, // { lat, lon } | null
+        forecast: {
+          cityName: null,
+          selectedTime: "Now", // 21:00 | 00:00...
+          map: null, // { "Now": {...weatherData} }
+        },
       },
-      selectedForecast: "Now",
+      City: {
+        location: null, // { lat, lon } | null
+        forecast: {
+          cityName: null,
+          selectedTime: "Now", // 21:00 | 00:00...
+          map: null, // { "Now": {...weatherData} }
+        },
+      },
     }
   );
 

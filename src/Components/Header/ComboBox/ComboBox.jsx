@@ -14,7 +14,10 @@ export default function ComboBox() {
 
   const {
     dispatch: dispatchWeather,
-    weatherState: { selectedLocation },
+    weatherState: {
+      User: { location: userLocation },
+      City: { location: selectedLocation },
+    },
   } = useWeather();
 
   const searchBarRef = useRef(null);
@@ -64,9 +67,17 @@ export default function ComboBox() {
           });
           if (!e.target.value.trim()) {
             dispatchWeather({
-              type: "UPDATE_SELECTED_LOCATION",
-              payload: null,
+              type: "UPDATE_LOCATION",
+              payload: { location: null, activeSource: "City" },
             });
+            if (userLocation)
+              dispatchWeather({
+                type: "UPDATE_ACTIVE_SOURCE",
+                payload: "User",
+              });
+            else
+              dispatchWeather({ type: "UPDATE_ACTIVE_SOURCE", payload: null });
+            e.target.blur();
           }
         }}
       />

@@ -1,15 +1,19 @@
 import { useEffect } from "react";
 import styles from "./WeatherCard.module.css";
-import { useWeather } from "../../Context/WeatherProvider/WeatherProvider.jsx";
+import {
+  useWeather,
+  useActiveSource,
+  useSelectedTime,
+} from "../../Context/WeatherProvider/WeatherProvider.jsx";
 import { useLoadingContext } from "../../Context/LoadingProvider/LoadingProvider.jsx";
 import { fetchWeeklyForecast } from "../../Api/weatherApi.js";
 
 export default function WeatherCard() {
   const { weatherState, dispatch } = useWeather();
   const { loading, setLoading } = useLoadingContext();
-  const isError = !weatherState.userLocation && !weatherState.selectedLocation;
-  const selectedForecast =
-    weatherState.forecast.obj[weatherState.selectedForecast];
+  const activeState = useActiveSource();
+  const selectedTime = useSelectedTime();
+  const isError = !weatherState.activeSource;
 
   // Use Effect that fetches weekly forecast about the selected city / current location
   useEffect(() => {
@@ -18,27 +22,25 @@ export default function WeatherCard() {
     setLoading(true);
 
     const getWeeklyForecast = async () => {
-      let forecast;
-      if (weatherState.selectedLocation)
-        forecast = await fetchWeeklyForecast(
-          weatherState.selectedLocation.lat,
-          weatherState.selectedLocation.lon
-        );
-      else
-        forecast = await fetchWeeklyForecast(
-          weatherState.userLocation.lat,
-          weatherState.userLocation.lon
-        );
+      const forecast = await fetchWeeklyForecast(
+        activeState.location.lat,
+        activeState.location.lon
+      );
 
       dispatch({
         type: "UPDATE_FORECAST",
-        payload: { city: forecast.city, obj: forecast.obj },
+        payload: {
+          selectedTime: "Now",
+          map: forecast.forecastMap,
+          cityName: forecast.cityName,
+        },
       });
+
       setLoading(false);
     };
 
     getWeeklyForecast();
-  }, [weatherState.userLocation, weatherState.selectedLocation]);
+  }, [weatherState.activeSource, weatherState.City.location]);
 
   if (loading)
     return (
@@ -47,7 +49,7 @@ export default function WeatherCard() {
       </div>
     );
 
-  if (isError)
+  if (isError || !selectedTime)
     return (
       <h1 className={styles.errorMsg}>
         Error, Pls Search For A city Or Apply Live Location
@@ -55,30 +57,24 @@ export default function WeatherCard() {
     );
 
   return (
-    <>
-      {weatherState.forecast.city && (
-        <main className={styles.weatherCard}>
-          <p className={styles.today}>{selectedForecast.date}</p>
-          <p className={styles.cityName}>{weatherState.forecast.city}</p>
-          <img
-            src={selectedForecast.iconUrl}
-            className={styles.weatherEmoji}
-            alt="Weather Emoji"
-          />
-          <p className={styles.weatherDescription}>
-            {selectedForecast.weatherDesc}
-          </p>
-          <p className={styles.cityTemp}>{selectedForecast.temp}</p>
-          <div className={styles.metrics}>
-            <p className={styles.humidity}>
-              Humidity: <span>{selectedForecast.humidity}</span>
-            </p>
-            <p className={styles.windSpeed}>
-              Wind Speed: <span>{selectedForecast.windSpeed}</span>
-            </p>
-          </div>
-        </main>
-      )}
-    </>
+    <main className={styles.weatherCard}>
+      <p className={styles.today}>{selectedTime.date}</p>
+      <p className={styles.cityName}>{activeState.forecast.cityName}</p>
+      <img
+        src={selectedTime.iconUrl}
+        className={styles.weatherEmoji}
+        alt="Weather Emoji"
+      />
+      <p className={styles.weatherDescription}>{selectedTime.weatherDesc}</p>
+      <p className={styles.cityTemp}>{selectedTime.temp}</p>
+      <div className={styles.metrics}>
+        <p className={styles.humidity}>
+          Humidity: <span>{selectedTime.humidity}</span>
+        </p>
+        <p className={styles.windSpeed}>
+          Wind Speed: <span>{selectedTime.windSpeed}</span>
+        </p>
+      </div>
+    </main>
   );
 }

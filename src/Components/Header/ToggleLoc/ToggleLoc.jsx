@@ -5,7 +5,7 @@ import { useWeather } from "../../../Context/WeatherProvider/WeatherProvider.jsx
 
 export default function ToggleLoc() {
   const [selectedOption, setSelectedOption] = useState("No");
-  const { dispatch } = useWeather();
+  const { weatherState, dispatch } = useWeather();
   const activeToggle = `${styles.toggleBtn} ${styles.activeBtn}`;
   const disabledToggle = styles.toggleBtn;
 
@@ -17,7 +17,12 @@ export default function ToggleLoc() {
           className={selectedOption === "Yes" ? activeToggle : disabledToggle}
           aria-label="Approve Location Access"
           onClick={() =>
-            handleToggleLocation(setSelectedOption, dispatch, true)
+            handleToggleLocation(
+              weatherState,
+              dispatch,
+              setSelectedOption,
+              true
+            )
           }
           disabled={selectedOption === "Yes"}
         >
@@ -27,7 +32,12 @@ export default function ToggleLoc() {
           className={selectedOption === "No" ? activeToggle : disabledToggle}
           aria-label="Decline Location Access"
           onClick={() =>
-            handleToggleLocation(setSelectedOption, dispatch, false)
+            handleToggleLocation(
+              weatherState,
+              dispatch,
+              setSelectedOption,
+              false
+            )
           }
           disabled={selectedOption === "No"}
         >

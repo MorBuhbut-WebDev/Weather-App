@@ -19,11 +19,11 @@ export function refactorLocations(locations) {
 
 export function refactorForecast(forecastObj) {
   const {
-    city: { name },
+    city: { name: cityName },
     list,
   } = forecastObj;
 
-  const forecast = list.reduce((current, day, index) => {
+  const forecastMap = list.reduce((current, day, index) => {
     const {
       dt_txt,
       weather: [{ description, icon }],
@@ -31,10 +31,10 @@ export function refactorForecast(forecastObj) {
       wind: { speed },
     } = day;
 
-    let [date, time] = [
-      new Date(dt_txt.split(" ")[0]).toDateString(),
-      dt_txt.split(" ")[1],
-    ];
+    let [date, time] = (([date, time]) => [
+      new Date(date).toDateString(),
+      time,
+    ])(dt_txt.split(" "));
 
     const timeKey =
       index + 1 >= list.length ||
@@ -59,8 +59,8 @@ export function refactorForecast(forecastObj) {
   }, {});
 
   return {
-    city: name,
-    obj: forecast,
+    cityName,
+    forecastMap,
   };
 }
 

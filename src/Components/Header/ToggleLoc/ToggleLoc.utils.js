@@ -1,14 +1,26 @@
-export function handleToggleLocation(setSelectedOption, dispatch, isAproved) {
+export function handleToggleLocation(
+  weatherState,
+  dispatch,
+  setSelectedOption,
+  isAproved
+) {
   if (isAproved) {
-    getUserLocation().then((location) =>
-      dispatch({ type: "UPDATE_USER_LOCATION", payload: location })
-    );
+    getUserLocation().then((location) => {
+      if (!weatherState.activeSource)
+        dispatch({ type: "UPDATE_ACTIVE_SOURCE", payload: "User" });
+      dispatch({
+        type: "UPDATE_LOCATION",
+        payload: { location, activeSource: "User" },
+      });
+    });
     setSelectedOption("Yes");
   } else {
     dispatch({
-      type: "UPDATE_USER_LOCATION",
-      payload: null,
+      type: "UPDATE_LOCATION",
+      payload: { location: null, activeSource: "User" },
     });
+    if (weatherState.activeSource === "User")
+      dispatch({ type: "UPDATE_ACTIVE_SOURCE", payload: null });
     setSelectedOption("No");
   }
 }
