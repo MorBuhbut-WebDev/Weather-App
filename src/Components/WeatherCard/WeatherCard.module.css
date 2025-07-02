@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-.today {
+.date {
   color: var(--text-primary);
   font-size: var(--text-medium);
   font-weight: 200;
@@ -15,12 +15,6 @@
 .cityName {
   color: var(--text-primary);
   font-size: var(--text-medium);
-}
-
-.weatherEmoji {
-  width: max(5%, 5rem);
-  height: auto;
-  object-fit: cover;
 }
 
 .weatherDescription {

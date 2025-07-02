@@ -7,6 +7,7 @@ import {
 } from "../../Context/WeatherProvider/WeatherProvider.jsx";
 import { useLoadingContext } from "../../Context/LoadingProvider/LoadingProvider.jsx";
 import { fetchWeeklyForecast } from "../../Api/weatherApi.js";
+import ForecastIcon from "../ForecastIcon/ForecastIcon.jsx";
 
 export default function WeatherCard() {
   const { weatherState, dispatch } = useWeather();
@@ -58,13 +59,9 @@ export default function WeatherCard() {
 
   return (
     <main className={styles.weatherCard}>
-      <p className={styles.today}>{selectedTime.date}</p>
+      <p className={styles.date}>{selectedTime.date}</p>
       <p className={styles.cityName}>{activeState.forecast.cityName}</p>
-      <img
-        src={selectedTime.iconUrl}
-        className={styles.weatherEmoji}
-        alt="Weather Emoji"
-      />
+      <ForecastIcon iconUrl={selectedTime.iconUrl} />
       <p className={styles.weatherDescription}>{selectedTime.weatherDesc}</p>
       <p className={styles.cityTemp}>{selectedTime.temp}</p>
       <div className={styles.metrics}>

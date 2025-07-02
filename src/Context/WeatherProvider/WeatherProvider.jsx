@@ -49,6 +49,18 @@ export default function WeatherProvider({ children }) {
             },
           };
 
+        case "UPDATE_SELECTED_TIME":
+          return {
+            ...state,
+            [state.activeSource]: {
+              ...state[state.activeSource],
+              forecast: {
+                ...state[state.activeSource].forecast,
+                selectedTime: action.payload,
+              },
+            },
+          };
+
         default:
           return state;
       }

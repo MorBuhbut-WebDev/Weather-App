@@ -10,7 +10,7 @@
   cursor: pointer;
 }
 
-.day {
+.time {
   color: var(--text-primary);
 }
 
@@ -19,16 +19,12 @@
   font-weight: 200;
 }
 
-.icon {
-  font-size: var(--text-large);
-}
-
-.selectedDay {
+.selectedTime {
   background-color: var(--border);
 }
 
 @media (min-width: 640px) {
-  .day,
+  .time,
   .temp {
     font-size: var(--text-medium);
   }
